@@ -1,5 +1,0 @@
-C:\Users\Emil\Documents\DuckGame\Mods\reskins\build\obj\x86\Release\reskins.dll
-C:\Users\Emil\Documents\DuckGame\Mods\reskins\build\obj\x86\Release\reskins.pdb
-C:\Users\Emil\Documents\DuckGame\Mods\reskins\reskins.dll
-C:\Users\Emil\Documents\DuckGame\Mods\reskins\reskins.pdb
-C:\Users\Emil\Documents\DuckGame\Mods\reskins\build\obj\x86\Release\mod.csprojResolveAssemblyReference.cache

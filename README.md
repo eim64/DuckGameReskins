@@ -10,4 +10,5 @@ And i added capes
 
 # Stuff im too lazy to do rn
 Letting you have custom animations: This is pretty easy to do since i made good code that is easy to expand, but i have to make UI so...
+
 Custom quack sounds: I've done UI so i basically just need to encode it to some other format that doesnt take a million bytes.

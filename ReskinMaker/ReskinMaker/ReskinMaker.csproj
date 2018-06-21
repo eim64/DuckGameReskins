@@ -57,6 +57,12 @@
     </Compile>
     <Compile Include="byteStuff.cs" />
     <Compile Include="ChunkGroup.cs" />
+    <Compile Include="CreateSkinPackForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateSkinPackForm.Designer.cs">
+      <DependentUpon>CreateSkinPackForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataChunk.cs" />
     <Compile Include="DataItem.cs" />
     <Compile Include="FileChunk.cs" />
@@ -110,6 +116,9 @@
     </Compile>
     <EmbeddedResource Include="AddText.resx">
       <DependentUpon>AddText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateSkinPackForm.resx">
+      <DependentUpon>CreateSkinPackForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ItemControls\GroupiItemControl.resx">
       <DependentUpon>GroupiItemControl.cs</DependentUpon>

@@ -18,12 +18,8 @@ namespace DuckGame
 
         public override void OnLoad()
         {
-            DevConsole.Log("Loaded component!",Color.Green);
             const string prefix = @"Equipment Retextures\";
-
-
             Equipment = skin.Textures.Where(x=>x.Key.StartsWith(prefix)).ToDictionary(x => x.Key.Remove(0,prefix.Length),x=>x.Value);
-            base.OnLoad();
         }
 
         public override void Update(Duck duck)
@@ -53,10 +49,7 @@ namespace DuckGame
 
         static IEnumerable<Sprite> getSprites(Holdable e)
         {
-            if (e == null)
-                return null;
-            var ret = e.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => f.FieldType == typeof(Sprite)).Select(fi => (Sprite)fi.GetValue(e));
-            return ret;
+            return e?.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(FI => FI.FieldType.IsAssignableFrom(typeof(Sprite))).Select(FI => (Sprite)FI.GetValue(e)); 
         }
     }
 }

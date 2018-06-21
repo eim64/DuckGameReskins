@@ -263,7 +263,12 @@ namespace DuckGame
         public static void InitializeReskins()
         {
             MonoMain.loadMessage = "loading new reskins";
-            foreach (Team team in DuckFile.GetFiles(Directory.GetCurrentDirectory(), "*.rsk").Select(x => Team.Deserialize(x)))
+
+            List<string> files = new List<string>(DuckFile.GetFiles(Directory.GetCurrentDirectory(), "*.rsk"));
+            foreach (Mod mod in ModLoader.accessibleMods)
+                files.AddRange(DuckFile.GetFiles(mod.configuration.contentDirectory,"*.rsk",SearchOption.AllDirectories));
+
+            foreach (Team team in files.Select(x => Team.Deserialize(x)))
             {
                 if (team == null || !team.hasHat || team.hat.texture.height <= ReskinFile.HatHeight || team.hat.texture.width != 64) continue;
 

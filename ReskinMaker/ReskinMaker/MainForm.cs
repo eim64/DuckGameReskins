@@ -218,5 +218,11 @@ namespace ReskinMaker
                 throw new SystemException("Did not read byte array properly");
             return buffer2;
         }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            CreateSkinPackForm form = new CreateSkinPackForm();
+            form.ShowDialog();
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DuckGame
 {
-    class ScaledSpriteMap : SpriteMap
+    internal class ScaledSpriteMap : SpriteMap
     {
         public Vec2 ActualScale;
 

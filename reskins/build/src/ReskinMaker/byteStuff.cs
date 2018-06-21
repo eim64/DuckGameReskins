@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class byteStuff
+    public class byteStuff
     {
         public static byte[] combine(params byte[][] arrays)
         {

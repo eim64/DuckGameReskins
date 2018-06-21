@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace ReskinMaker
 {
-    class DataChunk
+    public class DataChunk
     {
         public string Key = String.Empty;
 

@@ -10,7 +10,7 @@ using System.Text;
 
 namespace DuckGame
 {
-    class Reskin
+    public class Reskin
     {
         static FieldInfo _textureName = typeof(Tex2DBase).GetField("_textureName",BindingFlags.NonPublic|BindingFlags.Instance);
         public static Tex2D CorrectTexture(Tex2D tex, bool recolor = false, Vec3 color = default(Vec3))
@@ -29,7 +29,7 @@ namespace DuckGame
             return t;
         }
 
-        public static ScaledSpriteMap GetFixedSpriteMap(Tex2D texture,SpriteMap replace,Vec2 oldSize,Vec2 newSize, bool recolor = false, Vec3 color = default(Vec3))
+        internal static ScaledSpriteMap GetFixedSpriteMap(Tex2D texture,SpriteMap replace,Vec2 oldSize,Vec2 newSize, bool recolor = false, Vec3 color = default(Vec3))
         {
             ScaledSpriteMap sprite = new ScaledSpriteMap(CorrectTexture(texture, recolor, color), replace,oldSize, (int)newSize.x, (int)newSize.y);
             sprite.CenterOrigin();

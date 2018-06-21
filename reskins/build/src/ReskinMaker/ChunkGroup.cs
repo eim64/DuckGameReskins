@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class ChunkGroup : DataChunk
+    public class ChunkGroup : DataChunk
     {
         public List<DataChunk> chunks;
 

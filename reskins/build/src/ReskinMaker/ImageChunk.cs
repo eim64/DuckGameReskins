@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class ImageChunk : FileChunk
+    public class ImageChunk : FileChunk
     {
         public ImageChunk(string Name, string Path) : base(Name,Path){ }
 

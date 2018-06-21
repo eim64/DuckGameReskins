@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class ReskinFile
+    public class ReskinFile
     {
         public static Dictionary<int, Type> ChunkTypes = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsSubclassOf(typeof(DataChunk))).ToDictionary(x => x.Name.GetHashCode());
 

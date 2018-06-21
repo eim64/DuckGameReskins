@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class SettingsChunk : TextChunk
+    public class SettingsChunk : TextChunk
     {
         public SettingsChunk(){ }
         public SettingsChunk(string name,string text) : base(name, text) { }

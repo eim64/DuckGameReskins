@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DuckGame
 {
-    class ItemRetextureComponent : ReskinComponent
+    public class ItemRetextureComponent : ReskinComponent
     {
         Dictionary<Duck, List<Holdable>> Holdables = new Dictionary<Duck, List<Holdable>>();
         Dictionary<string, Tex2D> Equipment = new Dictionary<string, Tex2D>();

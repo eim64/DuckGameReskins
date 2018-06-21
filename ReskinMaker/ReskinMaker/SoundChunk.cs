@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class SoundChunk : FileChunk
+    public class SoundChunk : FileChunk
     {
         public SoundChunk(string Name, string Path) : base(Name,Path){ }
 

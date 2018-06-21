@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class FileChunk : DataChunk
+    public class FileChunk : DataChunk
     {
-        protected byte[] fileContent;
+        byte[] fileContent;
 
         public FileChunk(string Name,string Path)
         {

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DuckGame
 {
-    class ReskinComponent
+    public class ReskinComponent
     {
         protected Reskin skin;
 

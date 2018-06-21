@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReskinMaker
 {
-    class FileChunk : DataChunk
+    public class FileChunk : DataChunk
     {
         byte[] fileContent;
 

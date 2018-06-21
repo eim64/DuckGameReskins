@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DuckGame
 {
-    class CapeComponent : ReskinComponent
+    public class CapeComponent : ReskinComponent
     {
         Tex2D CapeTexture;
         public Dictionary<Duck, Cape> Capes = new Dictionary<Duck, Cape>();

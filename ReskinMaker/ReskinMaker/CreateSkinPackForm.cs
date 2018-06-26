@@ -110,6 +110,7 @@ namespace ReskinMaker
             CopyDir(DumpDirectory, path+@"\content\");
 
             File.WriteAllText(path+@"\build\src\Mod.cs",modcs.Replace("@NAME@",name).Replace("@CREATOR@",creator.Replace("\"","\\\"")).Replace("@DESCRIPTION@",description.Replace("\"", "\\\"")).Replace("@VERSION@",version.Replace("\"", "\\\"")));
+            MessageBox.Show("Successfully created pack!\nOpen duckgame and it will appear in the mod list");
         }
 
         void CopyDir(string SourcePath,string DestinationPath)
@@ -145,9 +146,9 @@ namespace ReskinMaker
         {
             SelectImage.Title = "Select Thumbnail";
             if (SelectImage.ShowDialog() != DialogResult.OK) return;
-            File.Copy(SelectImage.FileName,DumpDirectory+@"thumbnail.png",true);
+            File.Copy(SelectImage.FileName,DumpDirectory+@"screenshot.png",true);
             ThumbnailLabel.Text = "Current Thumbnail:\n"+Path.GetFileNameWithoutExtension(SelectImage.FileName);
-            button3.Text = "Change Thumbnail";
+            button3.Text = "Change Steam Thumbnail";
         }
 
         private void button4_Click(object sender, EventArgs e)

@@ -38,7 +38,7 @@ namespace DuckGame
             data[0] = dataTypes.FirstOrDefault(x=>x.Value==type).Key;
             bytes.CopyTo(data,1);
 
-            var compressedData = data;
+            var compressedData = compress(data);
 
             byte index = 0;
             int position = 0;
@@ -84,18 +84,25 @@ namespace DuckGame
 
             ActiveSessions.Remove(connection);
 
-            byte[] bytes = TransferSession.GetData();
+            byte[] bytes = decompress(TransferSession.GetData());
             onMessageCompleted(connection, new DataTransferArgs() { data = bytes.Skip(1).ToArray(), dataType = dataTypes[bytes[0]], profile = connection.profile });
         }
 
         public static byte[] compress(byte[] bytes)
         {
-            return bytes;
+            MemoryStream output = new MemoryStream();
+            using (DeflateStream dstream = new DeflateStream(output, CompressionMode.Compress))
+                dstream.Write(bytes, 0, bytes.Length);
+            return output.ToArray();
         }
 
         public static byte[] decompress(byte[] bytes)
         {
-            return bytes;
+            MemoryStream input = new MemoryStream(bytes);
+            MemoryStream output = new MemoryStream();
+            using (DeflateStream dstream = new DeflateStream(input, CompressionMode.Decompress))
+                dstream.CopyTo(output);
+            return output.ToArray();
         }
          
     }

@@ -133,6 +133,7 @@ namespace DuckGame
 
             UpdateNetmessageTypes();
             Reskin.InitializeReskins();
+
         }
 
         void FormClosed(object sender,EventArgs e)

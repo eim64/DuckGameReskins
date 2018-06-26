@@ -48,6 +48,8 @@ namespace DuckGame
 
             public void UpdateInfo(Duck duck)
             {
+                if (duck == null) return;
+
                 pexists = exists;
                 pquack = quack;
 

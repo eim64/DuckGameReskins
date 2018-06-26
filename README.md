@@ -30,5 +30,3 @@ You'll have to modify the source yourself if you want to change anything here, s
 The list contains ItemDatas which contains a User Control and some way of parsing and encoding dataChunks from that control which is then put into the hat texture.
 All the stuff in that list is added at the start of the [MainForm.cs class](https://github.com/eim64/DuckGameReskins/blob/master/ReskinMaker/ReskinMaker/MainForm.cs).
 I'm really bad at explaining so you're probably better off reading the stuff instead of me overcomplicating it.
-
-The components will obviously not work for others online unless you publish it to workshop.

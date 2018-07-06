@@ -193,8 +193,6 @@ namespace DuckGame
             if (Level.current != prevLevel)
                 LevelChange();
 
-
-
             prevLevel = Level.current;
 
             if (profiles.Count == pHats.Count)
@@ -228,24 +226,22 @@ namespace DuckGame
 
         void resetAll()
         {
-            foreach (var kvp in ActiveReskins)
-                resetReskin(kvp.Key);
-            ActiveReskins.Clear();
+            while (ActiveReskins.Any())
+                resetReskin(ActiveReskins.Keys.First());
         }
 
         void resetReskin(Profile pro)
         {
             Reskin skin;
             if (!ActiveReskins.TryGetValue(pro, out skin)) return;
-
-            foreach (var component in skin.Components)
-                component.OnSkinReset(pro.duck);
-
-            pro.persona = new DuckPersona(pro.persona.color);
-            if (pro.duck != null)
-                pro.duck.InitProfile();
-
             ActiveReskins.Remove(pro);
+
+            (Persona.all as List<DuckPersona>)[Persona.Number(pro.persona)] = pro.persona = new DuckPersona(pro.persona.color);
+
+            if (pro.duck == null) return;
+            pro.duck.InitProfile();
+            foreach (var component in skin.Components) component.OnSkinReset(pro.duck);
+
         }
 
         void requestReskin(Profile pro, string md5)
@@ -261,7 +257,7 @@ namespace DuckGame
             if (pro?.duck == null || hat == null || hat.height <= ReskinFile.HatHeight || hat.width != 64) return;
 
 
-            ReskinFile file = Reskin.tryLoadReskin(hat);
+            ReskinFile file = Reskin.tryLoadReskin(hat,false);
 
 
             if (file == null)
@@ -269,17 +265,17 @@ namespace DuckGame
                 DevConsole.Log("Error loading reskin", Color.Red);
                 return;
             }
-            file.Hat.Dispose();
 
 
             string md5 = (file.getChunk("MD5") as TextChunk)?.Text;
             string dir;
 
-            if (Network.isActive && !pro.localPlayer && md5 != null)
+            if (Network.isActive && md5 != null && !pro.localPlayer)
             {
                 if (Reskin.Exists(md5)) dir = reskinMod.ReskinPath + md5;
                 else {
                     requestReskin(pro, md5);
+
                     return;
                 }
             }
@@ -288,8 +284,6 @@ namespace DuckGame
             Reskin r = Reskin.GetReskin(dir);
             if (!Reskin.IsValid(r)) { DevConsole.Log("something is wrong with that reskin!", Color.Red); return; }
 
-
-
             ActiveReskins.Add(pro, r);
             r.Apply(pro.duck);
         }
@@ -297,7 +291,6 @@ namespace DuckGame
         void recieveData(object sender, DataTransferArgs args)
         {
             if (args.dataType != "reskin") return;
-            DevConsole.Log("swapping hat texture!", Color.Green);
 
             args.profile.team.hat.texture = Team.Deserialize(args.data).hat.texture;
             HatChange(args.profile);

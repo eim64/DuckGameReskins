@@ -17,8 +17,6 @@ namespace DuckGame
             RecieveData(index,data,last);
         }
 
-
-
         public void Reset(short session)
         {
             id = session;

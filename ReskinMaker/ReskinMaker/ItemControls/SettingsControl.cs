@@ -61,12 +61,9 @@ namespace ReskinMaker
             settings.Add("RecolorDucks",RecolorDucksButton);
         }
 
-        public string GetSettings()
+        public Dictionary<string,string> GetSettings()
         {
-            string ret = "";
-            foreach(var kvp in settings)
-                ret += (kvp.Key + KVseparator + getValue(kvp.Value) + ItemSeparator);
-            return ret.Trim(ItemSeparator);
+            return settings.ToDictionary(kvp => kvp.Key,kvp => getValue(kvp.Value));
         }
 
         public void ApplySettings(string settings)

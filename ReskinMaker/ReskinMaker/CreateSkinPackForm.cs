@@ -159,5 +159,10 @@ namespace ReskinMaker
             IconLabel.Text = "Current Icon:\n" + Path.GetFileNameWithoutExtension(SelectImage.FileName);
             button4.Text = "Change Icon";
         }
+
+        private void TextVersion_TextChanged(object sender, EventArgs e)
+        {
+            TextVersion.Text = Regex.Replace(TextVersion.Text, @"[^0-9.]", "");
+        }
     }
 }

@@ -80,12 +80,9 @@ namespace ReskinMaker
             return map;
         }
 
-        protected void Parse(Bitmap Image)
+        protected void Parse(Bitmap Image,bool loadHat = true)
         {
-            Hat = new Bitmap(Image.Width,HatHeight);
-            for (int x = 0; x < Image.Width; x++)
-                for (int y = 0; y < HatHeight; y++)
-                    Hat.SetPixel(x,y,Image.GetPixel(x,y));
+            
 
             List<byte> Lbytes = new List<byte>();
             int DataSize = (Image.Height - HatHeight) * Image.Width;
@@ -112,8 +109,13 @@ namespace ReskinMaker
                 c.Parse(currentData);
                 OtherData.Add(c);
             }
-                
 
+            if (!loadHat) return;
+
+            Hat = new Bitmap(Image.Width, HatHeight);
+            for (int x = 0; x < Image.Width; x++)
+                for (int y = 0; y < HatHeight; y++)
+                    Hat.SetPixel(x, y, Image.GetPixel(x, y));
         }
 
         public ReskinFile(Bitmap Hat, params DataChunk[] data)
@@ -124,10 +126,10 @@ namespace ReskinMaker
 
         public ReskinFile() { }
 
-        public static ReskinFile ParseFile(Bitmap Image)
+        public static ReskinFile ParseFile(Bitmap Image,bool loadHat = true)
         {
             var file = new ReskinFile();
-            file.Parse(Image);
+            file.Parse(Image,loadHat);
             return file;
         }
 

@@ -25,17 +25,19 @@ namespace ReskinMaker
 
         public void InitializeItems()
         {
-            Datas.Add(new ItemBitmap("Hat Texture",64,32) { required = true });
-            Datas.Add(new ItemBitmap("Duck Texture") { required = true });
-            Datas.Add(new ItemBitmap("Quack Texture") { required = true });
+            Datas.Clear();
 
-            Datas.Add(new ItemBitmap("Controlled Texture"));
-            Datas.Add(new ItemBitmap("Arm Texture"));
-            Datas.Add(new ItemBitmap("Feather Texture"));
+            Datas.Add(new ItemBitmap("Hat Texture",64,32) { required = true, helpMessage = "The Hat that will be displayed in the hat selector.\nmust be a png of size 64x32, capes go in its of field." });
+            Datas.Add(new ItemBitmap("Duck Texture") { required = true, helpMessage = "This is what the normal duck texture will get replaced with.\nYou should use the template picture if you're not 100% certain of what you're doing\nIn the settings you can select the size of each frame,\nstandard is 32x32 and if you choose to increase the frame size the skin quality will increase" });
+            Datas.Add(new ItemBitmap("Quack Texture") { required = true,helpMessage = "Same as the normal skin, except when the duck is quacking" });
 
-            Datas.Add(new ItemTextureGroup("Equipment Retextures") { required = true });
+            Datas.Add(new ItemBitmap("Controlled Texture") { helpMessage = "The texture thats used when the duck is being controlled\nIf left empty it will use the Duck Texture instead" });
+            Datas.Add(new ItemBitmap("Arm Texture") { helpMessage = "The texture that will replace the ducks arm texture\nif left empty default feathers will be used" });
+            Datas.Add(new ItemBitmap("Feather Texture") { helpMessage = "The texture that replaces the feathers that spwn when you're either close to being shot or shot.\nCheck template before you wreck urself"});
 
-            Datas.Add(new ItemSettings("Settings"));
+            Datas.Add(new ItemTextureGroup("Equipment Retextures") { required = true, helpMessage = "Changes the texture of objects when the duck picks it up.\n when you add something new you'll be asked to enter a texture name\nThe texture name is the same as the .xnb file name you can find in DuckGames content folder\nSo if you wanted to change the shotgun texture, find the texture name that the shotgun uses, (shotgun.xnb, and shotgunLoader.xnb)\nAnd add two retextures for the names (shotgun and shotgunLoader) and redraw their sprites to your liking." });
+
+            Datas.Add(new ItemSettings("Texture Settings") { helpMessage = "The duck texture size is the size of each duck frame, including the duck quack and controlled texture.\nIf you increase the value the reskin will need a higher quality\n" });
 
             Datas.Add(new ItemBitmap("Cape Texture",32,32));
 
@@ -60,6 +62,8 @@ namespace ReskinMaker
         void OpenImage(Bitmap bitmap)
         {
             try {
+                Applydatas();
+
                 var file = ReskinFile.ParseFile(bitmap);
                 (Datas[0].control as ImageSelectControl).ImageDisplay.Image = file.Hat;
                 foreach (var data in file.OtherData)
@@ -97,7 +101,6 @@ namespace ReskinMaker
                 bool valid = Datas[i].isValid(out message);
 
                 listView1.Items[i].ForeColor = valid ? Color.Green : Color.Red;
-
                 listView1.Items[i].ToolTipText = (Datas[i].required ? "required! ":"")+ (valid? "" : message);
             }
         }
@@ -169,7 +172,6 @@ namespace ReskinMaker
         }
 
 
-
         public static Bitmap Deserialize(byte[] data)
         {
             try
@@ -223,6 +225,21 @@ namespace ReskinMaker
         {
             CreateSkinPackForm form = new CreateSkinPackForm();
             form.ShowDialog();
+        }
+
+        private void extraInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedIndices.Count == 0) return;
+
+            var data = Datas[listView1.SelectedIndices[0]];
+            MessageBox.Show(data.helpMessage,"Extra Info");
+        }
+
+        private void listView1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (!e.Button.HasFlag(MouseButtons.Right) || listView1.SelectedIndices.Count == 0) return;
+            contextMenu.Show(this,PointToClient( MousePosition ));
+            extraInfoToolStripMenuItem.Enabled = !String.IsNullOrWhiteSpace(Datas[listView1.SelectedIndices[0]].helpMessage);
         }
     }
 }

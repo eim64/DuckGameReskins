@@ -121,13 +121,7 @@ namespace DuckGame
 
         public void LoadSettings(string settings)
         {
-            foreach (var setting in settings.Split(ItemSeparator))
-            {
-                var split = setting.Split(KVseparator);
-                if (split.Length < 2) continue;
-
-                Settings.Add(split[0],split[1]);
-            }
+            Settings = SettingsChunk.GetDict(settings);
         }
 
         public string GetSetting(string key)
@@ -252,11 +246,16 @@ namespace DuckGame
         }
 
 
-        public static ReskinFile tryLoadReskin(Tex2D texture)
+        public static ReskinFile tryLoadReskin(Tex2D texture,bool loadHat = true)
         {
-            try{ return ReskinFile.ParseFile(TextureHelper.getBitmap(texture)); } catch { }
+            try{ return ReskinFile.ParseFile(TextureHelper.getBitmap(texture),loadHat); } catch { }
 
             return null;
+        }
+
+        static string[] GetFiles(string path, string filter, bool topOnly = true)
+        {
+            return Directory.GetFiles(path, filter, topOnly ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories);
         }
 
 
@@ -264,9 +263,10 @@ namespace DuckGame
         {
             MonoMain.loadMessage = "loading new reskins";
 
-            List<string> files = new List<string>(DuckFile.GetFiles(Directory.GetCurrentDirectory(), "*.rsk"));
-            foreach (Mod mod in ModLoader.accessibleMods)
-                files.AddRange(DuckFile.GetFiles(mod.configuration.contentDirectory,"*.rsk",SearchOption.AllDirectories));
+
+            List<string> files = new List<string>(GetFiles(Directory.GetCurrentDirectory(), "*.rsk"));
+            foreach (string dir in ModLoader.accessibleMods.Select(x=>x?.configuration?.contentDirectory?.Replace('/','\\')).Where(x=>x != null))
+                files.AddRange(GetFiles(dir,"*.rsk",false));
 
             foreach (Team team in files.Select(x => Team.Deserialize(x)))
             {
@@ -281,7 +281,8 @@ namespace DuckGame
                 ReskinFile file = new ReskinFile(reskin.Hat);
                 file.OtherData.Add(new TextChunk("MD5", reskin.UID));
 
-                hatData.Add(reskin.UID, team.customData);
+                if (!hatData.ContainsKey(reskin.UID))
+                    hatData.Add(reskin.UID, team.customData);
 
                 if (IsValid(new Reskin(dir)))
                     team.customData = file.getHat(team.name + "md5");

@@ -11,6 +11,7 @@ namespace ReskinMaker
     {
         public string Name;
         public UserControl control;
+        public string helpMessage = "";
 
         public bool required = false;
 

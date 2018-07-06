@@ -175,6 +175,7 @@
             this.TextVersion.TabIndex = 13;
             this.TextVersion.Text = "1.0.0.0";
             this.TextVersion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TextVersion.TextChanged += new System.EventHandler(this.TextVersion_TextChanged);
             // 
             // label5
             // 

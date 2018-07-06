@@ -28,18 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripSaveButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripOpenButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.listView1 = new System.Windows.Forms.ListView();
             this.controlSplitter = new System.Windows.Forms.Splitter();
             this.SaveFile = new System.Windows.Forms.SaveFileDialog();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.extraInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
+            this.contextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -96,6 +100,17 @@
             this.toolStripButton2.Text = "Import";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(98, 22);
+            this.toolStripButton3.Text = "Create Skin Pack";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
             // listView1
             // 
             this.listView1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -108,6 +123,7 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseUp);
             // 
             // controlSplitter
             // 
@@ -126,16 +142,19 @@
             // 
             this.openFile.Title = "Select File";
             // 
-            // toolStripButton3
+            // contextMenu
             // 
-            this.toolStripButton3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(98, 22);
-            this.toolStripButton3.Text = "Create Skin Pack";
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.extraInfoToolStripMenuItem});
+            this.contextMenu.Name = "contextMenu";
+            this.contextMenu.Size = new System.Drawing.Size(124, 26);
+            // 
+            // extraInfoToolStripMenuItem
+            // 
+            this.extraInfoToolStripMenuItem.Name = "extraInfoToolStripMenuItem";
+            this.extraInfoToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.extraInfoToolStripMenuItem.Text = "extra info";
+            this.extraInfoToolStripMenuItem.Click += new System.EventHandler(this.extraInfoToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -152,6 +171,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.contextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,6 +188,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.OpenFileDialog openFile;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem extraInfoToolStripMenuItem;
     }
 }
 

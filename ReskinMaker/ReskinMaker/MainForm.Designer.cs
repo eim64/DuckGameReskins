@@ -42,6 +42,7 @@
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.extraInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToDefault = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.contextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +54,8 @@
             this.toolStripOpenButton,
             this.toolStripButton1,
             this.toolStripButton2,
-            this.toolStripButton3});
+            this.toolStripButton3,
+            this.resetToDefault});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(523, 25);
@@ -114,6 +116,7 @@
             // listView1
             // 
             this.listView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 25);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
@@ -156,6 +159,16 @@
             this.extraInfoToolStripMenuItem.Text = "extra info";
             this.extraInfoToolStripMenuItem.Click += new System.EventHandler(this.extraInfoToolStripMenuItem_Click);
             // 
+            // resetToDefault
+            // 
+            this.resetToDefault.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.resetToDefault.Image = ((System.Drawing.Image)(resources.GetObject("resetToDefault.Image")));
+            this.resetToDefault.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.resetToDefault.Name = "resetToDefault";
+            this.resetToDefault.Size = new System.Drawing.Size(96, 22);
+            this.resetToDefault.Text = "Reset To Default";
+            this.resetToDefault.Click += new System.EventHandler(this.resetToDefault_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,6 +203,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem extraInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton resetToDefault;
     }
 }
 

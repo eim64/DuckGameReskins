@@ -65,7 +65,9 @@ namespace ReskinMaker
                 Applydatas();
 
                 var file = ReskinFile.ParseFile(bitmap);
-                (Datas[0].control as ImageSelectControl).ImageDisplay.Image = file.Hat;
+                var ctrl = (Datas[0].control as ImageSelectControl);
+                ctrl.ImageDisplay.Image = file.Hat;
+                ctrl.ImageSize = file.Hat.Size;
                 foreach (var data in file.OtherData)
                     Datas.Find(x => x.Name == data.Key)?.parseData(data);
                 bitmap.Dispose();
@@ -79,6 +81,8 @@ namespace ReskinMaker
 
         void Applydatas()
         {
+            controlSplitter.Controls.Clear();
+            listView1.Items.Clear();
             foreach(var data in Datas)
                 listView1.Items.Add(data.Name);
         }
@@ -99,7 +103,7 @@ namespace ReskinMaker
             for (int i = 0; i < Datas.Count; i++)
             {
                 bool valid = Datas[i].isValid(out message);
-
+                
                 listView1.Items[i].ForeColor = valid ? Color.Green : Color.Red;
                 listView1.Items[i].ToolTipText = (Datas[i].required ? "required! ":"")+ (valid? "" : message);
             }
@@ -157,7 +161,7 @@ namespace ReskinMaker
             if (SaveFile.ShowDialog() != DialogResult.OK) return;
 
             var bytes = SaveImage().getHat(dialog.TextBox.Text);
-            System.IO.File.WriteAllBytes(SaveFile.FileName,bytes);
+            File.WriteAllBytes(SaveFile.FileName,bytes);
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -240,6 +244,13 @@ namespace ReskinMaker
             if (!e.Button.HasFlag(MouseButtons.Right) || listView1.SelectedIndices.Count == 0) return;
             contextMenu.Show(this,PointToClient( MousePosition ));
             extraInfoToolStripMenuItem.Enabled = !String.IsNullOrWhiteSpace(Datas[listView1.SelectedIndices[0]].helpMessage);
+        }
+
+        private void resetToDefault_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Sure you want to do that?", "Reset", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            InitializeItems();
+
         }
     }
 }

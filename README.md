@@ -4,8 +4,15 @@ This is basically Armytecel's clientreskins mod in the sense that others wont ne
 You make a .rsk file using the ReskinMaker application and put it in the steamapps\common\DuckGame folder and it should appear ingame.
 If others have the mod the skin will be shown to them aswell.
 
-# new stuff
-Capes, HD skins and UI.
+#How to make a reskin
+Open up the reskin maker, here you'll find a multiple options, and if you click them you'll be greeted by more options such as which image to use or change the resolution of the skins.
+If you hover over a setting it will tell what the problem is, and if you want extra info right click it and select extra info.
+
+You can use the Save button in the toolbar to save the hat as a .png file, which you can then open with the open button.
+But the buttons of most importance is the Import and Export buttons, using these you can save and open .rsk files.
+
+If you want higher resolution on your skin, you can change stuff in the Texture Settings tab. For instance, if you set Duck Sprite Size to 64x64, then each frame of the duck will require 64x64 pixels (double the normal amount) but will be scaled down so that it appears as if the duck had a higher definition.
+The Duck Sprite Size is used for the Duck Texture, Quack Texture, and Controlled Texture; so all of these has to have the correct size.
 
 # Creating a reskin pack
 Using the Create Reskin Pack button found in the ReskinMaker you can now create reskin packs that can be uploaded to the workshop, these all are dependant on having the reskin mod installed, but others will still not have to download them making them way better than hatpacks.

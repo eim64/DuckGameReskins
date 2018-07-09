@@ -36,12 +36,12 @@
             // 
             // listView1
             // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.ShowItemToolTips = true;
-            this.listView1.Size = new System.Drawing.Size(112, 240);
+            this.listView1.Size = new System.Drawing.Size(112, 237);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
@@ -49,7 +49,7 @@
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(15, 213);
+            this.AddButton.Location = new System.Drawing.Point(15, 237);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(39, 24);
             this.AddButton.TabIndex = 1;
@@ -59,7 +59,7 @@
             // 
             // removeButton
             // 
-            this.removeButton.Location = new System.Drawing.Point(60, 213);
+            this.removeButton.Location = new System.Drawing.Point(60, 237);
             this.removeButton.Name = "removeButton";
             this.removeButton.Size = new System.Drawing.Size(39, 24);
             this.removeButton.TabIndex = 2;
@@ -72,7 +72,7 @@
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter1.Location = new System.Drawing.Point(118, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(349, 240);
+            this.splitter1.Size = new System.Drawing.Size(349, 261);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -85,7 +85,7 @@
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.listView1);
             this.Name = "GroupiItemControl";
-            this.Size = new System.Drawing.Size(467, 240);
+            this.Size = new System.Drawing.Size(467, 261);
             this.ResumeLayout(false);
 
         }

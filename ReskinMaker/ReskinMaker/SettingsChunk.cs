@@ -22,7 +22,7 @@ namespace ReskinMaker
 
         public static string ParseDict(Dictionary<string, string> dict)
         {
-            return String.Join(ItemSeparator,dict.Select(kvp=>kvp.Key+KVseparator));
+            return String.Join(ItemSeparator,dict.Select(kvp=>kvp.Key + KVseparator + kvp.Value));
         }
 
         public static Dictionary<string,string> GetDict(string settings)

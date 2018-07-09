@@ -28,6 +28,8 @@ namespace ReskinMaker
         {
             ChunkGroup group = data as ChunkGroup;
             if (group == null) return;
+
+            ctrl.Datas.Clear();
             foreach(var chunk in group.chunks.Where(x=>x is ImageChunk))
             {
                 ItemBitmap item = new ItemBitmap(chunk.Key);

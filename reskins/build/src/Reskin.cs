@@ -175,8 +175,6 @@ namespace DuckGame
             Vec3 color = persona.color;
             bool recolor = GetSettingBool("RecolorDucks",false);
 
-            DevConsole.Log("applied reskin",Color.Green);
-
             Tex2D tex;
 
             if (Textures.TryGetValue("Duck Texture",out tex))

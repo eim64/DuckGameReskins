@@ -15,7 +15,7 @@ If you want higher resolution on your skin, you can change stuff in the Texture 
 The Duck Sprite Size is used for the Duck Texture, Quack Texture, and Controlled Texture; so all of these has to have the correct size.
 
 # Creating a reskin pack
-Using the Create Reskin Pack button found in the ReskinMaker you can now create reskin packs that can be uploaded to the workshop, these all are dependant on having the reskin mod installed, but others will still not have to download them making them way better than hatpacks.
+Using the Create Reskin Pack button found in the ReskinMaker you can now create reskin packs that conains multiple reskins and can be uploaded to the workshop, these all are dependant on having the reskin mod installed, but others will still not have to download them making them way better than hatpacks.
 
 # Coding your own components
 I wrote it so that its really easy to add new features to skins.

@@ -4,7 +4,7 @@ This is basically Armytecel's clientreskins mod in the sense that others wont ne
 You make a .rsk file using the ReskinMaker application and put it in the steamapps\common\DuckGame folder and it should appear ingame.
 If others have the mod the skin will be shown to them aswell.
 
-#How to make a reskin
+# How to make a reskin
 Open up the reskin maker, here you'll find a multiple options, and if you click them you'll be greeted by more options such as which image to use or change the resolution of the skins.
 If you hover over a setting it will tell what the problem is, and if you want extra info right click it and select extra info.
 

@@ -103,7 +103,6 @@ namespace DuckGame
 
         void LoadTextures(string folder,string prefix)
         {
-            
             var rootFolder = folder.Remove(0,prefix.Length);
 
             DirectoryInfo dir = new DirectoryInfo(folder);
@@ -111,7 +110,7 @@ namespace DuckGame
                 Textures.Add(rootFolder + file.Name.Substring(0, file.Name.Length - 4),TextureHelper.getTex2D(ContentPack.LoadTexture2D(file.FullName)));
 
             foreach (var d in dir.GetDirectories())
-                LoadTextures(folder+d.Name+'\\',prefix);
+                LoadTextures(folder+'\\'+d.Name+'\\',prefix);
         }
 
         #region settings stuff
@@ -193,10 +192,10 @@ namespace DuckGame
             if (Textures.TryGetValue("Arm Texture",out tex))
                 persona.armSprite = GetFixedSpriteMap(tex, persona.armSprite, defArmSize, ArmSpriteSize, recolor, color);
 
-            duck.InitProfile();
-
             foreach (var component in Components)
                 component.OnApply(duck);
+
+            duck.InitProfile();
         }
 
         public static bool Exists(string UID)

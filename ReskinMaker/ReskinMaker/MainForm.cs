@@ -248,8 +248,14 @@ namespace ReskinMaker
 
         private void resetToDefault_Click(object sender, EventArgs e)
         {
+            if (listView1.SelectedIndices.Count == 0 && MessageBox.Show("There is no selected propery!", "oh noes", MessageBoxButtons.OK) != DialogResult.Yes) return;
             if (MessageBox.Show("Sure you want to do that?", "Reset", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+
+            List<ItemData> oldDatas = new List<ItemData>(Datas);
+            int index = listView1.SelectedIndices[0];
             InitializeItems();
+            oldDatas[index] = Datas[index];
+            Datas = oldDatas;
 
         }
     }

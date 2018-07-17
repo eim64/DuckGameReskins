@@ -23,7 +23,7 @@ using System.Security.Cryptography;
 [assembly: AssemblyCompany("Killer-Fackur || EIM64")]
 
 // The description of the mod
-[assembly: AssemblyDescription("Client mod that stuff")]
+[assembly: AssemblyDescription("Client mod that turns .rsk files into reskins")]
 
 // The mod's version
 [assembly: AssemblyVersion("69.420")]
@@ -195,11 +195,12 @@ namespace DuckGame
 
             prevLevel = Level.current;
 
+            List<Profile> profiles = ActiveProfiles.Where(x=>x.duck != null).ToList();
             if (profiles.Count == pHats.Count)
                 for (int i = 0; i < profiles.Count; i++)
                     if (pHats[i] != profiles[i]?.team?.hat) HatChange(profiles[i]);
 
-            pHats = profiles.Select(x => x?.team?.hat).ToList();
+            pHats = profiles.Where(x=> x.duck != null).Select(x => x?.team?.hat).ToList();
 
 
             DuckEvents.Update();
@@ -228,6 +229,9 @@ namespace DuckGame
         {
             while (ActiveReskins.Any())
                 resetReskin(ActiveReskins.Keys.First());
+
+            foreach(Profile pro in Profiles.all.Where(x=>x.persona != null))
+                (Persona.all as List<DuckPersona>)[Persona.Number(pro.persona)] = pro.persona = new DuckPersona(pro.persona.color);
         }
 
         void resetReskin(Profile pro)
@@ -235,9 +239,7 @@ namespace DuckGame
             Reskin skin;
             if (!ActiveReskins.TryGetValue(pro, out skin)) return;
             ActiveReskins.Remove(pro);
-
-            (Persona.all as List<DuckPersona>)[Persona.Number(pro.persona)] = pro.persona = new DuckPersona(pro.persona.color);
-
+            
             if (pro.duck == null) return;
             pro.duck.InitProfile();
             foreach (var component in skin.Components) component.OnSkinReset(pro.duck);
@@ -306,7 +308,7 @@ namespace DuckGame
             Level.Remove(hat);
         }
 
-        List<Profile> profiles
+        List<Profile> ActiveProfiles
         {
             get { return Profiles.active; }
         }

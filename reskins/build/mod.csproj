@@ -70,6 +70,7 @@
     <Compile Include="src\Reskin.cs" />
     <Compile Include="src\ReskinComponents\CapeComponent.cs" />
     <Compile Include="src\ReskinComponents\ItemRetextureComponent.cs" />
+    <Compile Include="src\ReskinComponents\NoQuackTextureQuackComponent.cs" />
     <Compile Include="src\ReskinMaker\byteStuff.cs" />
     <Compile Include="src\ReskinMaker\ChunkGroup.cs" />
     <Compile Include="src\ReskinMaker\DataChunk.cs" />

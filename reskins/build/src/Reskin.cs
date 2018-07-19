@@ -179,8 +179,9 @@ namespace DuckGame
             if (Textures.TryGetValue("Duck Texture",out tex))
                 persona.sprite = GetFixedSpriteMap(tex, persona.sprite,defDuckSize, duckSpriteSize, recolor, color);
 
-            if (Textures.TryGetValue("Quack Texture",out tex))
+            if (Textures.TryGetValue("Quack Texture", out tex))
                 persona.quackSprite = GetFixedSpriteMap(tex, persona.quackSprite, defDuckSize, duckSpriteSize, recolor, color);
+            else persona.quackSprite = persona.sprite;
 
             if (Textures.TryGetValue("Controlled Texture", out tex))
                 persona.controlledSprite = GetFixedSpriteMap(tex, persona.controlledSprite, defDuckSize, duckSpriteSize, recolor, color);

@@ -29,9 +29,9 @@ namespace ReskinMaker
 
             Datas.Add(new ItemBitmap("Hat Texture",64,32) { required = true, helpMessage = "The Hat that will be displayed in the hat selector.\nmust be a png of size 64x32, capes go in its of field." });
             Datas.Add(new ItemBitmap("Duck Texture") { required = true, helpMessage = "This is what the normal duck texture will get replaced with.\nYou should use the template picture if you're not 100% certain of what you're doing\nIn the settings you can select the size of each frame,\nstandard is 32x32 and if you choose to increase the frame size the skin quality will increase" });
-            Datas.Add(new ItemBitmap("Quack Texture") { required = true,helpMessage = "Same as the normal skin, except when the duck is quacking" });
+            Datas.Add(new ItemBitmap("Quack Texture") { helpMessage = "Same as the normal skin, except when the duck is quacking\nIf left empty the duck will just change size when quacking as it does with ArmyteCels client skins mod." });
 
-            Datas.Add(new ItemBitmap("Controlled Texture") { helpMessage = "The texture thats used when the duck is being controlled\nIf left empty it will use the Duck Texture instead" });
+            Datas.Add(new ItemBitmap("Controlled Texture") { helpMessage = "The texture thats used when the duck is being controlled\nIf left empty it will use the Quack Texture instead" });
             Datas.Add(new ItemBitmap("Arm Texture") { helpMessage = "The texture that will replace the ducks arm texture\nif left empty default feathers will be used" });
             Datas.Add(new ItemBitmap("Feather Texture") { helpMessage = "The texture that replaces the feathers that spwn when you're either close to being shot or shot.\nCheck template before you wreck urself"});
 

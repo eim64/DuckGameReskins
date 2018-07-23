@@ -87,7 +87,7 @@ namespace DuckGame
             if (File.Exists(settingsPath))
                 LoadSettings(File.ReadAllText(settingsPath));
 
-            LoadTextures(directory,path);
+            LoadTextures(path,path);
 
             duckSpriteSize = GetSettingVec2("DuckSpriteSize", new Vec2(32));
             ArmSpriteSize = GetSettingVec2("ArmSpriteSize", new Vec2(16));
@@ -107,7 +107,7 @@ namespace DuckGame
 
             DirectoryInfo dir = new DirectoryInfo(folder);
             foreach (FileInfo file in dir.GetFiles("*.png"))
-                Textures.Add(rootFolder + file.Name.Substring(0, file.Name.Length - 4),TextureHelper.getTex2D(ContentPack.LoadTexture2D(file.FullName)));
+                Textures.Add(rootFolder.TrimStart('\\') + file.Name.Substring(0, file.Name.Length - 4),TextureHelper.getTex2D(ContentPack.LoadTexture2D(file.FullName)));
 
             foreach (var d in dir.GetDirectories())
                 LoadTextures(folder+'\\'+d.Name+'\\',prefix);

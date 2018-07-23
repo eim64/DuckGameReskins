@@ -39,8 +39,9 @@ namespace DuckGame
                 equipment.Update(); //equipments change their textures on update and not onEquip and OnUnequip for some wierd reason (thanks landon), so then i just update it once more incase it was spawned before the duck in the level.
 
                 foreach (var sprite in getSprites(equipment))
+                {
                     if (sprite?.texture?.textureName != null && Equipment.TryGetValue(sprite.texture.textureName, out tex2d) && sprite.texture.width <= tex2d.width && sprite.texture.height <= tex2d.height) sprite.texture = tex2d;
-
+                }
                 pEquips.Add(equipment);
             }
         }

@@ -25,6 +25,8 @@ namespace ReskinMaker
             if (t.ShowDialog() != DialogResult.OK || t.Text == "") return;
             listView1.Items.Add(new ListViewItem(t.TextBox.Text)).EnsureVisible();
             Datas.Add(new ItemBitmap(t.TextBox.Text));
+
+            MainForm.UpdateValidity();
         }
 
         public void ApplyDatas()

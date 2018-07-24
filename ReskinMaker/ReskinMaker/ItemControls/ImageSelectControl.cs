@@ -54,6 +54,7 @@ namespace ReskinMaker
                     return;
 
                 (Parent as ImageSelectControl).ImageSize = Image.Size;
+                MainForm.UpdateValidity();
             }
         }
     }

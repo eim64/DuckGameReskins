@@ -167,6 +167,21 @@ namespace DuckGame
                 component.Update(duck);
         }
 
+        /// <summary>
+        /// Gets all textures in folder.
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
+        public Dictionary<string,Tex2D> GetTextures(string folder)
+        {
+            if (folder == null) throw new ArgumentNullException();
+
+            folder = folder.TrimEnd('\\')+'\\';
+
+            return Textures.Where(kvp=>kvp.Key.StartsWith(folder)).ToDictionary(kvp=>kvp.Key.Remove(0,folder.Length),kvp=>kvp.Value);
+        }
+
+
         public void Apply(Duck duck)
         {
             var persona = duck.persona;
@@ -279,16 +294,23 @@ namespace DuckGame
                 ReskinFile file = new ReskinFile(reskin.Hat);
                 file.OtherData.Add(new TextChunk("MD5", reskin.UID));
 
-                if (!hatData.ContainsKey(reskin.UID))
-                    hatData.Add(reskin.UID, team.customData);
+                if (!IsValid(GetReskin(reskinMod.ReskinPath+reskin.UID))) continue;
 
-                if (IsValid(new Reskin(dir)))
-                    team.customData = file.getHat(team.name + "md5");
+                byte[] data;
+                if (hatData.TryGetValue(reskin.UID, out data)) {
+                    team.customData = data;
+                } else {
+                    data = file.getHat(team.name + "md5"); ;
+                    hatData.Add(reskin.UID, data);
+                }
+
+                
+                team.customData = data;
 
                 file.Hat.Dispose();
                 reskin.Hat.Dispose();
 
-                DevConsole.Log("successfully loaded: " + reskin.UID, Color.Green);
+                DevConsole.Log("successfully loaded: " + reskin.UID+"/"+team.name+", with customdatasize: "+team.customData.Length, Color.Green);
 
                 Teams.AddExtraTeam(team);
             }

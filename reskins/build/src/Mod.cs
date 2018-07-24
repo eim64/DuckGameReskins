@@ -218,7 +218,7 @@ namespace DuckGame
                 var hat = duck.hat as TeamHat;
                 if (hat != null && hat.team == duck.team) removeHat(duck);
 
-                if (persona.sprite.texture.textureName != "RESKIN") skin.Apply(duck);
+                if (persona.sprite.texture.textureName != "RESKIN" || Keyboard.Pressed(Keys.F6)) skin.Apply(duck);
             }
 
             pFullscreen = fullscreen;

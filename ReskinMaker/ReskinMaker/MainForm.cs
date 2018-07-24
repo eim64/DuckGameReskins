@@ -15,9 +15,17 @@ namespace ReskinMaker
     public partial class MainForm : Form
     {
         List<ItemData> Datas = new List<ItemData>();
+        static MainForm instance;
+
+        public static void UpdateValidity()
+        {
+            instance.updateItemValidity();
+        }
+
 
         public MainForm()
         {
+            instance = this;
             InitializeComponent();
             InitializeItems();
             updateItemValidity();
@@ -151,6 +159,13 @@ namespace ReskinMaker
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            string s;
+            if (!Datas.TrueForAll(x => x.isValid(out s)))
+            {
+                MessageBox.Show("All Propertise are not valid","PIBCAC",MessageBoxButtons.OK);
+                return;
+            }
+
             AddText dialog = new AddText();
             dialog.Text = "Enter Team Name";
             if (dialog.ShowDialog() != DialogResult.OK) return;

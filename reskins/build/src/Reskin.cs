@@ -296,16 +296,10 @@ namespace DuckGame
 
                 if (!IsValid(GetReskin(reskinMod.ReskinPath+reskin.UID))) continue;
 
-                byte[] data;
-                if (hatData.TryGetValue(reskin.UID, out data)) {
-                    team.customData = data;
-                } else {
-                    data = file.getHat(team.name + "md5"); ;
-                    hatData.Add(reskin.UID, data);
-                }
+                if (!hatData.ContainsKey(reskin.UID))
+                    hatData.Add(reskin.UID, team.customData);
 
-                
-                team.customData = data;
+                team.customData = file.getHat(team.name + "md5"); ;
 
                 file.Hat.Dispose();
                 reskin.Hat.Dispose();

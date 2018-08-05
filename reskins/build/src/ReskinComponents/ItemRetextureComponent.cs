@@ -11,6 +11,9 @@ namespace DuckGame
         Dictionary<Duck, List<Holdable>> Holdables = new Dictionary<Duck, List<Holdable>>();
         Dictionary<string, Tex2D> Equipment = new Dictionary<string, Tex2D>();
 
+        const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public;
+        protected static Dictionary<Type, List<FieldInfo>> SpriteFields = new Dictionary<Type, List<FieldInfo>>();
+
         public ItemRetextureComponent(Reskin reskin) : base(reskin)
         {
 
@@ -51,7 +54,13 @@ namespace DuckGame
 
         static IEnumerable<Sprite> getSprites(Holdable e)
         {
-            return e?.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(FI => FI.FieldType.IsAssignableFrom(typeof(Sprite))).Select(FI => (Sprite)FI.GetValue(e)); 
+            Type type = e.GetType();
+
+            List<FieldInfo> fields;
+            if(!SpriteFields.TryGetValue(type,out fields))
+                SpriteFields.Add(type,fields = type.GetFields(flags).Where(field => field.FieldType.IsAssignableFrom(typeof(Sprite))).ToList());
+
+            return fields.Select(FI => (Sprite)FI.GetValue(e)); 
         }
     }
 }

@@ -173,17 +173,8 @@ namespace DuckGame
             }
         }
 
-        static FieldInfo _fullscreen = typeof(MonoMain).GetField("_fullScreen", BindingFlags.Instance | BindingFlags.NonPublic);
-        bool fullscreen
-        {
-            get { return (bool)_fullscreen.GetValue(MonoMain.instance); }
-            set { _fullscreen.SetValue(MonoMain.instance, value); }
-        }
 
-        bool pFullscreen;
-
-        
-
+        Dictionary<Profile, SpriteMap> pHats = new Dictionary<Profile, SpriteMap>();
         public void Update(GameTime gt)
         {
             doLobbyStuff();
@@ -195,12 +186,18 @@ namespace DuckGame
 
             prevLevel = Level.current;
 
-            List<Profile> profiles = ActiveProfiles.Where(x=>x.duck != null).ToList();
-            if (profiles.Count == pHats.Count)
-                for (int i = 0; i < profiles.Count; i++)
-                    if (pHats[i] != profiles[i]?.team?.hat) HatChange(profiles[i]);
+            var profiles = ActiveProfiles.Where(x=>x.duck != null);
+            foreach(var profile in profiles)
+            {
+                SpriteMap teamHat = profile?.team?.hat, previousHat = null;
 
-            pHats = profiles.Where(x=> x.duck != null).Select(x => x?.team?.hat).ToList();
+                if (teamHat == null) continue;
+
+                if (!pHats.TryGetValue(profile, out previousHat) || previousHat != teamHat)
+                    HatChange(profile);
+            }
+
+            pHats = profiles.ToDictionary(profile=> profile, profile => profile?.team?.hat);
 
 
             DuckEvents.Update();
@@ -218,10 +215,8 @@ namespace DuckGame
                 var hat = duck.hat as TeamHat;
                 if (hat != null && hat.team == duck.team) removeHat(duck);
 
-                if (persona.sprite.texture.textureName != "RESKIN" || Keyboard.Pressed(Keys.F6)) skin.Apply(duck);
+                if (persona.sprite.texture.textureName != "RESKIN" || Keyboard.Pressed(Keys.F6) || persona.sprite.texture.IsDisposed) skin.Apply(duck);
             }
-
-            pFullscreen = fullscreen;
         }
 
 
@@ -230,8 +225,9 @@ namespace DuckGame
             while (ActiveReskins.Any())
                 resetReskin(ActiveReskins.Keys.First());
 
-            foreach(Profile pro in Profiles.all.Where(x=>x.persona != null))
-                (Persona.all as List<DuckPersona>)[Persona.Number(pro.persona)] = pro.persona = new DuckPersona(pro.persona.color);
+            List<DuckPersona> list = Persona.all as List<DuckPersona>;
+            for (int index = 0; index < list.Count; ++index)
+                Profiles.core._profiles[index].persona = list[index] = new DuckPersona(list[index].color);
         }
 
         void resetReskin(Profile pro)
@@ -239,7 +235,20 @@ namespace DuckGame
             Reskin skin;
             if (!ActiveReskins.TryGetValue(pro, out skin)) return;
             ActiveReskins.Remove(pro);
-            
+
+            DevConsole.Log("reset skin: "+pro.name,Color.Green);
+
+            pro.persona.sprite.texture.Dispose();
+            pro.persona.armSprite.texture.Dispose();
+            pro.persona.arrowSprite.texture.Dispose();
+            pro.persona.featherSprite.texture.Dispose();
+            pro.persona.quackSprite.texture.Dispose();
+            pro.persona.skipSprite.texture.Dispose();
+            pro.persona.controlledSprite.texture.Dispose();
+            pro.persona.fingerPositionSprite.texture.Dispose();
+
+            (Persona.all as List<DuckPersona>)[Persona.Number(pro.persona)] = pro.persona = new DuckPersona(pro.persona.color);
+
             if (pro.duck == null) return;
             pro.duck.InitProfile();
             foreach (var component in skin.Components) component.OnSkinReset(pro.duck);
@@ -286,6 +295,7 @@ namespace DuckGame
             Reskin r = Reskin.GetReskin(dir);
             if (!Reskin.IsValid(r)) { DevConsole.Log("something is wrong with that reskin!", Color.Red); return; }
 
+            DevConsole.Log("skin appied to "+pro.name,Color.Green);
             ActiveReskins.Add(pro, r);
             r.Apply(pro.duck);
         }
@@ -313,7 +323,7 @@ namespace DuckGame
             get { return Profiles.active; }
         }
 
-        List<SpriteMap> pHats = new List<SpriteMap>();
+        
 
         public void LevelChange()
         {

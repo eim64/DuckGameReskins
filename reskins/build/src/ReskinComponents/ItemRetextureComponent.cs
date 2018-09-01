@@ -42,6 +42,7 @@ namespace DuckGame
 
                 foreach (var sprite in getSprites(equipment))
                     if (sprite?.texture?.textureName != null && Equipment.TryGetValue(sprite.texture.textureName, out tex2d) && sprite.texture.width <= tex2d.width && sprite.texture.height <= tex2d.height) sprite.texture = tex2d;
+
                 pEquips.Add(equipment);
             }
         }
@@ -58,7 +59,7 @@ namespace DuckGame
 
             List<FieldInfo> fields;
             if(!SpriteFields.TryGetValue(type,out fields))
-                SpriteFields.Add(type,fields = type.GetFields(flags).Where(field => field.FieldType.IsAssignableFrom(typeof(Sprite))).ToList());
+                SpriteFields.Add(type,fields = type.GetFields(flags).Where(field => typeof(Sprite).IsAssignableFrom(field.FieldType)).ToList());
 
             return fields.Select(FI => (Sprite)FI.GetValue(e)); 
         }

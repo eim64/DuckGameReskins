@@ -226,6 +226,7 @@ namespace DuckGame
                 resetReskin(ActiveReskins.Keys.First());
 
             List<DuckPersona> list = Persona.all as List<DuckPersona>;
+
             for (int index = 0; index < list.Count; ++index)
                 Profiles.core._profiles[index].persona = list[index] = new DuckPersona(list[index].color);
         }
@@ -236,8 +237,6 @@ namespace DuckGame
             if (!ActiveReskins.TryGetValue(pro, out skin)) return;
             ActiveReskins.Remove(pro);
 
-            DevConsole.Log("reset skin: "+pro.name,Color.Green);
-
             pro.persona.sprite.texture.Dispose();
             pro.persona.armSprite.texture.Dispose();
             pro.persona.arrowSprite.texture.Dispose();
@@ -247,7 +246,18 @@ namespace DuckGame
             pro.persona.controlledSprite.texture.Dispose();
             pro.persona.fingerPositionSprite.texture.Dispose();
 
-            (Persona.all as List<DuckPersona>)[Persona.Number(pro.persona)] = pro.persona = new DuckPersona(pro.persona.color);
+            var personas = (Persona.all as List<DuckPersona>);
+            int index = personas.FindIndex(persona => persona == pro.persona || persona.color == pro.persona.color);
+            DevConsole.Log("reset skin: " + pro.name + ", with persona index: "+index, Color.Green);
+
+            try
+            {
+                personas[index] = pro.persona = new DuckPersona(pro.persona.color);
+            }
+            catch
+            {
+                DevConsole.Log("invalid index! Could not correct persona because duckgame messed up persona indexes earlier.",Color.Red);
+            }
 
             if (pro.duck == null) return;
             pro.duck.InitProfile();
@@ -331,7 +341,7 @@ namespace DuckGame
                 foreach (var component in reskin.Components)
                     component.OnLevelChange();
 
-            if (Level.current is TitleScreen || Level.current is ArcadeLevel)
+            if (Level.current is TitleScreen/* || Level.current is ArcadeLevel*/)
                 resetAll();
         }
     }

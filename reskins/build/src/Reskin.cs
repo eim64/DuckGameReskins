@@ -46,7 +46,7 @@ namespace DuckGame
         public static Dictionary<string, byte[]> hatData = new Dictionary<string, byte[]>();
         const string SettingsFileName = "Settings";
 
-        public static List<Type> ComponentTypes = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsSubclassOf(typeof(ReskinComponent))).ToList();
+        public static List<Type> ComponentTypes = ModLoader.accessibleMods.SelectMany(mod=>mod.configuration.assembly.GetTypes().Where(x => x.IsSubclassOf(typeof(ReskinComponent)))).ToList();
         protected List<ReskinComponent> CreateComponents()
         {
             return ComponentTypes.Select(type=>Activator.CreateInstance(type,new object[] { this }) as ReskinComponent).ToList();

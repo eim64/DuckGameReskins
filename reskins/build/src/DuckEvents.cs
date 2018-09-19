@@ -16,6 +16,8 @@ namespace DuckGame
 
         public static void Update()
         {
+
+
             foreach (var profile in reskinMod.ActiveReskins.Keys)
             {
                 if (!Infos.ContainsKey(profile))
@@ -53,7 +55,7 @@ namespace DuckGame
                 pexists = exists;
                 pquack = quack;
 
-                exists = duck.localSpawnVisible;
+                exists = duck.localSpawnVisible || Level.current is TeamSelect2;
                 quack = duck.IsQuacking();
             }
         }

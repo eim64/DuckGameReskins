@@ -186,7 +186,7 @@ namespace DuckGame
 
             prevLevel = Level.current;
 
-            var profiles = ActiveProfiles.Where(x=>x.duck != null);
+            var profiles = ActiveProfiles.Where(x=>x.duck != null && x.team != null);
             foreach(var profile in profiles)
             {
                 SpriteMap teamHat = profile?.team?.hat, previousHat = null;
@@ -214,7 +214,7 @@ namespace DuckGame
 
                 var hat = duck.hat as TeamHat;
                 if (hat != null && hat.team == duck.team) removeHat(duck);
-
+                
                 if (persona.sprite.texture.textureName != "RESKIN" || Keyboard.Pressed(Keys.F6) || persona.sprite.texture.IsDisposed) skin.Apply(duck);
             }
         }
@@ -330,7 +330,7 @@ namespace DuckGame
 
         List<Profile> ActiveProfiles
         {
-            get { return Profiles.active; }
+            get { return (List<Profile>)Profiles.all; }
         }
 
         
@@ -341,7 +341,7 @@ namespace DuckGame
                 foreach (var component in reskin.Components)
                     component.OnLevelChange();
 
-            if (Level.current is TitleScreen/* || Level.current is ArcadeLevel*/)
+            if (Level.current is TitleScreen)
                 resetAll();
         }
     }

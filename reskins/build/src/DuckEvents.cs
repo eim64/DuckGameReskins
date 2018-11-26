@@ -50,13 +50,11 @@ namespace DuckGame
 
             public void UpdateInfo(Duck duck)
             {
-                if (duck == null) return;
-
                 pexists = exists;
                 pquack = quack;
 
-                exists = duck.localSpawnVisible || Level.current is TeamSelect2;
-                quack = duck.IsQuacking();
+                exists = duck != null && ((Level.current is GameLevel ? duck.localSpawnVisible : duck.level == Level.current));
+                quack = duck != null && duck.IsQuacking();
             }
         }
     }

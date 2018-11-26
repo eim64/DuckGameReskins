@@ -151,26 +151,30 @@ namespace DuckGame
 
         void doLobbyStuff()
         {
-            if (!ModLoader.modsEnabled || !(Level.current is TeamSelect2) || Steam.lobby == null || Steam.lobby.id == 0L)
+            bool init = Network.isActive && (bool)Network.activeNetwork?.core?.GetType()?.GetField("_initializedSettings",flags).GetValue(Network.activeNetwork.core) == true;
+            if(init && !updateLobby)
             {
-                updateLobby = true;
-                return;
-            }
-            string str;
-            if (Level.current is TeamSelect2 && updateLobby && !string.IsNullOrEmpty((str = Steam.lobby.GetLobbyData("mods"))))
-            {
-                int index = str.IndexOf(reskinMod.replaceData);
-                if (index < 0)
-                {
-                    updateLobby = false;
-                    return;
-                };
+                Type NCDiscord = Assembly.GetAssembly(typeof(Program)).GetType("DuckGame.NCDiscord");
 
-                str = str.Remove(index, reskinMod.replaceData.Length)
-                    .Trim('|').Replace("||", "|");
-                Steam.lobby.SetLobbyData("mods", str);
-                updateLobby = false;
+                string ModData = String.Join("|",ModLoader.accessibleMods.Where(mod=>!(mod is CoreMod || mod is DisabledMod) && mod.configuration != null && !(bool)disabledField.GetValue(mod.configuration,new object[0])));
+
+                if(NCDiscord != null && Network.activeNetwork.core.GetType() == NCDiscord)
+                {
+                    object lobby = NCDiscord.GetField("_lobby",flags).GetValue(Network.activeNetwork.core);
+                    lobby.GetType().GetMethod("SetLobbyData").Invoke(lobby,new object[] { "mods", ModData });
+
+                    DevConsole.Log(DCSection.Mod,"Patching Discord Lobby Data");                    
+                }
+
+                if(Steam.lobby != null)
+                {
+                    Steam.lobby.SetLobbyData("mods",ModData);
+
+                    DevConsole.Log(DCSection.Mod, "Patching Steam Lobby Data");
+                }
             }
+
+            updateLobby = init;
         }
 
 
@@ -186,8 +190,8 @@ namespace DuckGame
 
             prevLevel = Level.current;
 
-            var profiles = ActiveProfiles.Where(x=>x.duck != null && x.team != null);
-            foreach(var profile in profiles)
+            var profiles = ActiveProfiles.Where(x => x.duck != null && x.team != null);
+            foreach (var profile in profiles)
             {
                 SpriteMap teamHat = profile?.team?.hat, previousHat = null;
 
@@ -197,7 +201,7 @@ namespace DuckGame
                     HatChange(profile);
             }
 
-            pHats = profiles.ToDictionary(profile=> profile, profile => profile?.team?.hat);
+            pHats = profiles.ToDictionary(profile => profile, profile => profile?.team?.hat);
 
 
             DuckEvents.Update();
@@ -214,7 +218,7 @@ namespace DuckGame
 
                 var hat = duck.hat as TeamHat;
                 if (hat != null && hat.team == duck.team) removeHat(duck);
-                
+
                 if (persona.sprite.texture.textureName != "RESKIN" || Keyboard.Pressed(Keys.F6) || persona.sprite.texture.IsDisposed) skin.Apply(duck);
             }
         }
@@ -248,7 +252,7 @@ namespace DuckGame
 
             var personas = (Persona.all as List<DuckPersona>);
             int index = personas.FindIndex(persona => persona == pro.persona || persona.color == pro.persona.color);
-            DevConsole.Log("reset skin: " + pro.name + ", with persona index: "+index, Color.Green);
+            DevConsole.Log("reset skin: " + pro.name + ", with persona index: " + index, Color.Green);
 
             try
             {
@@ -256,7 +260,7 @@ namespace DuckGame
             }
             catch
             {
-                DevConsole.Log("invalid index! Could not correct persona because duckgame messed up persona indexes earlier.",Color.Red);
+                DevConsole.Log("invalid index! Could not correct persona because duckgame messed up persona indexes earlier.", Color.Red);
             }
 
             if (pro.duck == null) return;
@@ -278,7 +282,7 @@ namespace DuckGame
             if (pro?.duck == null || hat == null || hat.height <= ReskinFile.HatHeight || hat.width != 64) return;
 
 
-            ReskinFile file = Reskin.tryLoadReskin(hat,false);
+            ReskinFile file = Reskin.tryLoadReskin(hat, false);
 
 
             if (file == null)
@@ -305,7 +309,7 @@ namespace DuckGame
             Reskin r = Reskin.GetReskin(dir);
             if (!Reskin.IsValid(r)) { DevConsole.Log("something is wrong with that reskin!", Color.Red); return; }
 
-            DevConsole.Log("skin appied to "+pro.name,Color.Green);
+            DevConsole.Log("skin appied to " + pro.name, Color.Green);
             ActiveReskins.Add(pro, r);
             r.Apply(pro.duck);
         }
@@ -333,7 +337,7 @@ namespace DuckGame
             get { return (List<Profile>)Profiles.all; }
         }
 
-        
+
 
         public void LevelChange()
         {
